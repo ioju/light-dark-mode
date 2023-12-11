@@ -16,19 +16,20 @@ function capitalize(word) {
 
 function switchTheme(event) {
     const lightMode = !event.target.checked;
-
     const mode = lightMode ? 'light' : 'dark';
+
+    localStorage.setItem('theme', mode);
 
     document.documentElement.setAttribute('data-theme', `${mode}`);
 
     const navBackgroundColor = lightMode ? 255 : 0;
     const textBoxBackgroundColor = lightMode ? 0 : 255;
-
     const darkIcon = 'fa-moon';
     const lightIcon = 'fa-sun';
+    const backgroundOpacity = 50;
 
     nav.style.backgroundColor = `rgb(${navBackgroundColor} ${navBackgroundColor} ${navBackgroundColor} / 50%)`;
-    textBox.style.backgroundColor = `rgb(${textBoxBackgroundColor} ${textBoxBackgroundColor} ${textBoxBackgroundColor}S / 50%)`;
+    textBox.style.backgroundColor = `rgb(${textBoxBackgroundColor} ${textBoxBackgroundColor} ${textBoxBackgroundColor}S / ${backgroundOpacity}%)`;
 
     toggleIcon.children[0].textContent = `${capitalize(mode)} Mode`;
 
@@ -44,3 +45,13 @@ function switchTheme(event) {
 }
 
 toggleSwitch.addEventListener('change', switchTheme);
+
+function setInitialTheme() {
+    const theme = localStorage.getItem('theme');
+
+    if (theme === 'dark') {
+        toggleSwitch.click();
+    }
+}
+
+setInitialTheme();
